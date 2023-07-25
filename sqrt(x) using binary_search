@@ -1,0 +1,42 @@
+#include<iostream>
+using namespace std;
+long long int perfectsqrt(int n){
+    int s=0;
+    int e=n;
+   long long  int mid=s+(e-s)/2;
+    long long int ans=-1;
+    while(s<=e){
+        long long int sqr=mid*mid;
+        if(sqr==n){
+            return mid;
+        }
+        if(sqr>n){
+            e=mid-1;
+        }
+        else{
+            ans=mid;
+            s=mid+1;
+        }
+        mid=s+(e-s)/2;
+    }
+    return ans;
+}
+double more_presious(int n,int presision,int tempsol){
+    double fact=1;
+    double ans=tempsol;
+    for(int i=0;i<presision;i++){
+        fact=fact/10;
+        for(double j=ans;j*j<n;j=j+fact){
+            ans=j;
+        }
+    }
+    return ans;
+}
+int main(){
+    int n;
+    cout<<"Enter the number:"<<"\n";
+    cin>>n;
+    int temp=perfectsqrt( n);
+    cout<<more_presious(n,5,temp);
+    
+}
