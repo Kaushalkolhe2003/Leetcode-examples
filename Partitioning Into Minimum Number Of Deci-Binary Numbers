@@ -1,0 +1,12 @@
+class Solution {
+public:
+    int minPartitions(string n) {
+        int ans=0;
+        for (char x: n){
+            //asci values
+            int current=x-48;
+            ans=max(current,ans);
+        }
+        return ans;
+    }
+};
