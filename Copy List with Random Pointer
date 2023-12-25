@@ -1,0 +1,72 @@
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* next;
+    Node* random;
+    
+    Node(int _val) {
+        val = _val;
+        next = NULL;
+        random = NULL;
+    }
+};
+*/
+
+class Solution {
+     private:
+    void insert_at_tail(Node * &head,Node *&tail,int data){
+        Node *temp=new Node(data);
+        if(head==NULL ){
+            head=temp;
+            tail=temp;
+        }
+        else{
+            tail->next=temp;
+            tail=tail->next;
+        }
+    }
+public:
+    Node* copyRandomList(Node* head) {
+        Node *clonehead= NULL;
+        Node *clonetail=NULL;
+        
+        Node *temp=head;
+        while(temp != NULL){
+            insert_at_tail(clonehead,clonetail,temp->val);
+            temp=temp->next;
+        }
+        Node *originalhead=head;
+        Node *originalclone =clonehead;
+        while(originalhead != NULL && originalclone !=NULL){
+           Node *nxt=originalhead->next;
+		   originalhead->next=originalclone;
+		   originalhead=nxt;
+
+		   nxt=originalclone->next;
+		   originalclone->next=originalhead;
+		   originalclone=nxt;
+        }
+         temp=head;
+	 while(temp !=NULL){
+		if(temp->next != NULL){
+		temp->next->random =temp->random ?temp->random->next : temp->random;	
+		}
+		temp=temp->next->next;
+     }
+        //revert
+	originalhead=head;
+	originalclone=clonehead;
+	while(originalhead !=NULL && originalclone !=NULL){
+		originalhead->next=originalclone->next;
+		originalhead=originalhead->next;
+		if(originalhead !=NULL){
+			originalclone->next=originalhead->next;
+
+		}
+		originalclone=originalclone->next;	
+	}
+	return clonehead;
+    }
+};
