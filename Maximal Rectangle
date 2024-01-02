@@ -1,0 +1,93 @@
+class Solution {
+     private:
+  
+  vector<int> nextSmallerElement(vector<int> &arr, int n) {
+        stack<int> s;
+        s.push(-1);
+        vector<int> ans(n);
+
+        for(int i=n-1; i>=0 ; i--) {
+            int curr = arr[i];
+            while(s.top() != -1 && arr[s.top()] >= curr)
+            {
+                s.pop();
+            }
+            //ans is stack ka top
+            ans[i] = s.top();
+            s.push(i);
+        }
+        return ans;
+    }
+    
+    vector<int> prevSmallerElement(vector<int> &arr, int n) {
+        stack<int> s;
+        s.push(-1);
+        vector<int> ans(n);
+
+        for(int i=0; i<n; i++) {
+            int curr = arr[i];
+            while(s.top() != -1 && arr[s.top()] >= curr)
+            {
+                s.pop();
+            }
+            //ans is stack ka top
+            ans[i] = s.top();
+            s.push(i);
+        }
+        return ans; 
+    }    
+    
+  
+  
+  int largestRectangleArea(vector<int> &height, int n) {
+        //int n= heights.size();
+        
+        vector<int> next(n);
+        next = nextSmallerElement(height, n);
+            
+        vector<int> prev(n);
+        prev = prevSmallerElement(height, n);
+        
+        int area = INT_MIN;
+        for(int i=0; i<n; i++) {
+            int l = height[i];
+            
+            if(next[i] == -1) {
+                next[i] = n;
+            }
+             int b = next[i] - prev[i] - 1;
+            int newArea = l*b;
+            area = max(area, newArea);
+        }
+        return area;
+    }
+public:
+    int maximalRectangle(vector<vector<char>>& matrix) {
+         vector<vector<int>> intMatrix(matrix.size(), vector<int>(matrix[0].size()));
+
+    for (size_t i = 0; i < matrix.size(); ++i) {
+        for (size_t j = 0; j < matrix[i].size(); ++j) {
+            intMatrix[i][j] = matrix[i][j] - '0'; // Convert char to int
+        }
+    }
+        int n=matrix[0].size();
+         int area = largestRectangleArea(intMatrix[0], n);
+        
+        for(int i = 1; i<matrix.size(); i++) {
+            for(int j = 0; j<n; j++) {
+                
+                //row udpate: by adding previous row's value
+                if(intMatrix[i][j] != 0)
+               intMatrix [i][j] =   intMatrix[i][j] +   intMatrix[i-1][j];
+                else
+                      intMatrix[i][j] = 0;
+            }
+            
+            //entire row is updated now
+            area = max(area, largestRectangleArea(  intMatrix[i],n));
+            
+        }
+        return area;
+        
+    }
+};
