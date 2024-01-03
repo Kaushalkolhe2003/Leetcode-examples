@@ -1,0 +1,37 @@
+class Solution {
+public:
+    string sample_string(string &number){
+        string latest;
+        for(int i=0;i<number.size();i++){
+            if(number[i] != ' ' && number[i] != '-'){
+                latest+=number[i];
+            }
+        }
+        return latest;
+    }
+    string reformatNumber(string number) {
+        string sample = sample_string(number);
+        int n=sample.length();
+        int i=0;
+        string formatted="";
+        while(i < n){
+            int remaining = n - i;
+                if(remaining > 4){
+                    formatted+=sample.substr(i,3) + '-';
+                    i+=3;
+                }
+            else if(remaining==4){
+                formatted+=sample.substr(i,2) + '-';
+                i+=2;
+                formatted +=sample.substr(i,2);
+                break;
+            }
+            else{
+                formatted+=sample.substr(i);
+                break;
+            }
+        }
+        return formatted;
+        
+    }
+};
