@@ -1,0 +1,36 @@
+class Solution {
+public:
+    string complexNumberMultiply(string num1, string num2) {
+        int n=num1.size();
+        int m=num2.size();
+        string ans="";
+        int i1=0;int i2=0;
+        for(int i=0;i<n;++i){
+            if(num1[i]=='+'){
+                i1=i;
+                break;
+            }
+        }
+        for(int i=0;i< m;++i){
+            if(num2[i]=='+'){
+                i2=i;
+                break;
+            }
+        }
+        int a,b,c,d;
+         a = stoi(num1.substr(0,i1));
+        b = stoi(num1.substr(i1+1));
+        c = stoi(num2.substr(0,i2));
+        d = stoi(num2.substr(i2+1));
+
+        int real = a*c - b*d;
+        int img = b*c+a*d;
+
+        ans += to_string(real);
+        ans +="+";
+        ans += to_string(img);
+        ans +="i";
+
+        return ans;
+    }
+};
