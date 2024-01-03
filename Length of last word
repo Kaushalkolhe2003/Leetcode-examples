@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int lengthOfLastWord(string s) {
+        
+
+    istringstream iss(s);
+    string lastWord, word;
+
+    // Iterate through words in the string
+    while (iss >> word) {
+        lastWord = word; // Store each word encountered
+    }
+        int cnt=0;
+        for(int i=0; i<lastWord.length();i++){
+            cnt++;
+        }
+        return cnt;
+    }
+};
