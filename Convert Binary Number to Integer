@@ -1,0 +1,28 @@
+class Solution {
+    public:
+    ListNode * reverse(ListNode *head){
+        ListNode *forward=NULL;
+        ListNode *curr=head;
+        ListNode *prev=NULL;
+        while(curr!=NULL){
+        forward=curr->next;
+        curr->next=prev;
+        prev=curr;
+        curr=forward;
+    }
+    return prev;
+    }
+public:
+    int getDecimalValue(ListNode* head) {
+        head=reverse(head);
+        int base=1;
+        int decimal =0;
+        ListNode *temp=head;
+        while(temp !=NULL){
+            decimal+= temp->val *(base);
+            base=base*2;
+            temp=temp->next;
+        }
+        return decimal;
+    }
+};
