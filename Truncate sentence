@@ -1,0 +1,23 @@
+#include <string>
+
+class Solution {
+public:
+    std::string truncateSentence(std::string s, int k) {
+        std::string output;
+        int cnt = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            if (s[i] == ' ') {
+                cnt++;
+                if (cnt == k) {
+                    // Break out of the loop when k spaces are encountered
+                    break;
+                }
+            }
+
+            output += s[i];
+        }
+
+        return output;
+    }
+};
