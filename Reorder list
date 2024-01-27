@@ -1,0 +1,57 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+    ListNode* prev = nullptr;
+    ListNode* current = head;
+
+    while (current) {
+        ListNode* nextNode = current->next;
+        current->next = prev;
+        prev = current;
+        current = nextNode;
+    }
+
+    return prev;
+}
+
+    void reorderList(ListNode* head) {
+         if (!head || !head->next) {
+        return;
+    }
+
+    // Step 1: Find the middle of the linked list
+    ListNode* slow = head;
+    ListNode* fast = head;
+    while (fast->next && fast->next->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    // Step 2: Reverse the second half of the linked list
+    ListNode* secondHalf = reverseList(slow->next);
+    slow->next = nullptr;
+
+    // Step 3: Merge the first half and the reversed second half alternately
+    ListNode* firstHalf = head;
+    while (secondHalf) {
+        ListNode* temp1 = firstHalf->next;
+        ListNode* temp2 = secondHalf->next;
+
+        firstHalf->next = secondHalf;
+        secondHalf->next = temp1;
+
+        firstHalf = temp1;
+        secondHalf = temp2;
+    }
+    }
+};
