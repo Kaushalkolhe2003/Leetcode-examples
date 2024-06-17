@@ -1,0 +1,18 @@
+class Solution {
+public:
+    bool judgeSquareSum(int c) {
+      int x= (int) sqrt(c);
+     set<int> s;
+ 
+    for(int i=0;i<=x;i++){
+        s.insert(i*i);
+    }
+    for(int i=0;i<=x;i++){
+        int remain=c-(i*i);
+        if(s.find(remain) != s.end()){
+            return true;
+        }
+    }
+    return false;    
+}
+};
