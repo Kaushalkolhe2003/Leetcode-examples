@@ -1,0 +1,54 @@
+class Solution {
+private:
+    private:
+    bool solve(vector<vector<char>>& board) {
+        int n = board.size(); 
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (board[i][j] == '.') {
+                 
+                    for (char c = '1'; c <= '9'; c++) {
+                        if (isValid(board, i, j, c)) {
+                            board[i][j] = c; 
+
+                            if (solve(board)) // Recursively solve
+                                return true;
+
+                            board[i][j] = '.'; // Backtrack
+                        }
+                    }
+                    return false; 
+                }
+            }
+        }
+        return true; // Sudoku solved
+    }
+
+   
+    bool isValid(vector<vector<char>>& board, int row, int col, char c) {
+        int n = board.size();
+
+        
+        for (int i = 0; i < n; i++) {
+            if (board[row][i] == c || board[i][col] == c)
+                return false;
+        }
+
+        
+        int startRow = row - row % 3;
+        int startCol = col - col % 3;
+        for (int i = startRow; i < startRow + 3; i++) {
+            for (int j = startCol; j < startCol + 3; j++) {
+                if (board[i][j] == c)
+                    return false;
+            }
+        }
+
+        return true;
+    }
+public:
+    void solveSudoku(vector<vector<char>>& board) {
+        solve(board);
+    }
+};
