@@ -1,0 +1,27 @@
+class Solution {
+    private:
+    void allpermutation(vector<int> &nums,vector<int> types,unordered_map<int,bool>mp,vector<vector<int>> &ans){
+        
+        if(types.size()==nums.size()){
+            ans.push_back(types);
+            return ;
+        }
+        for(int i=0;i<nums.size();i++){
+            if(!mp[i]){
+                mp[i]=true;
+                types.push_back(nums[i]);
+                allpermutation(nums,types,mp,ans);
+                types.pop_back();
+                mp[i]=false;
+            }
+        }
+    }
+public:
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> ans;
+        vector<int> types;
+        unordered_map<int,bool> mp;
+        allpermutation(nums,types,mp,ans);
+        return ans;
+    }
+};
