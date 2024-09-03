@@ -1,0 +1,32 @@
+class Solution {
+public:
+    // Function to convert a letter to its position in the alphabet
+int letterToNumber(char letter) {
+    return letter - 'a' + 1;
+}
+
+// Function to sum the digits of a number represented as a string
+int sumOfDigits(const std::string& numStr) {
+    int sum = 0;
+    for (char ch : numStr) {
+        sum += ch - '0'; // Convert character to digit
+    }
+    return sum;
+}
+
+
+    int getLucky(string s, int k) {
+      string numStr;
+    for (char ch : s) {
+        numStr += std::to_string(letterToNumber(ch));
+    }
+
+    // Apply the transformation k times
+    int num = sumOfDigits(numStr);
+    for (int i = 1; i < k; ++i) {
+        num = sumOfDigits(std::to_string(num));
+    }
+
+    return num;
+    }
+};
