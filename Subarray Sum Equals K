@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int subarraySum(vector<int>& nums, int k) {
+        int count = 0;
+        int sum = 0;
+        unordered_map<int, int> mp;
+        mp[0] = 1;  // To handle the case when a subarray starts from index 0.
+
+        for (int i = 0; i < nums.size(); i++) {
+            sum += nums[i];
+
+            // Check if there is a prefix subarray we can subtract to get sum == k.
+            if (mp.find(sum - k) != mp.end()) {
+                count += mp[sum - k];
+            }
+
+            // Increment the frequency of the current cumulative sum in the map.
+            mp[sum]++;
+        }
+
+        return count;
+    }
+};
