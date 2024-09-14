@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        set<char> st;  // To store unique characters in the current window
+        int i = 0, j = 0, maxLength = 0;
+        int n = s.size();
+        
+        while (j < n) {
+            // If the character is not in the set, insert it and update maxLength
+            if (st.find(s[j]) == st.end()) {
+                st.insert(s[j]);
+                maxLength = max(maxLength, j - i + 1);
+                j++;
+            }
+            // If the character is already in the set, remove characters from the set from the start (i)
+            else {
+                st.erase(s[i]);
+                i++;
+            }
+        }
+        
+        return maxLength;
+    }
+};
