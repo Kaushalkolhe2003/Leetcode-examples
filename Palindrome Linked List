@@ -1,0 +1,58 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    // Helper function to reverse a linked list
+    ListNode* reverseLL(ListNode* head) {
+        ListNode* prev = NULL;
+        ListNode* curr = head;
+        while (curr != NULL) {
+            ListNode* nextNode = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = nextNode;
+        }
+        return prev;
+    }
+
+    bool isPalindrome(ListNode* head) {
+        if (!head || !head->next) {
+            return true; // Empty list or single node list is a palindrome
+        }
+
+        // Step 1: Find the middle of the linked list
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while (fast != NULL && fast->next != NULL) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+
+        // Step 2: Reverse the second half of the list
+        ListNode* secondHalfHead = reverseLL(slow);
+
+        // Step 3: Compare the first half and the reversed second half
+        ListNode* firstHalfHead = head;
+        ListNode* temp = secondHalfHead; // Pointer to track the reversed second half
+        while (temp != NULL) {
+            if (firstHalfHead->val != temp->val) {
+                return false; // Mismatch found, not a palindrome
+            }
+            firstHalfHead = firstHalfHead->next;
+            temp = temp->next;
+        }
+
+        // Optional Step 4: Restore the list (not required for the problem)
+        // reverseLL(secondHalfHead);
+
+        return true; // If all values matched, it's a palindrome
+    }
+};
