@@ -9,6 +9,7 @@ public:
             swap(nums[low], nums[mid]);
             low++;
             mid++;
+//increment
         }
         else if (nums[mid] == 1) {
             mid++;
